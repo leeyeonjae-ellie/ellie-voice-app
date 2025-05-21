@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Talk to Ellie</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+        input[type=text] { width: 100%; padding: 10px; font-size: 16px; }
+        button { padding: 10px 20px; font-size: 16px; margin-top: 10px; }
+        .response { margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Talk to Ellie</h1>
+    <form method="POST">
+        <input type="text" name="user_input" placeholder="Say something to Ellie..." required>
+        <button type="submit">Send</button>
+    </form>
+
+    {% if response %}
+        <div class="response">
+            <p><strong>Ellie:</strong> {{ response }}</p>
+            {% if audio_file %}
+                <audio controls autoplay>
+                    <source src="/{{ audio_file }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>
