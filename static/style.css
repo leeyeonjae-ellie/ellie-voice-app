@@ -1,0 +1,65 @@
+/* style.css — Ellie app UI enhancements */
+
+body {
+  background: linear-gradient(to right, #fdfbfb, #ebedee);
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  padding: 40px;
+  max-width: 600px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+h1 {
+  color: #0056b3;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+input[type=text] {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #004494;
+}
+
+.response {
+  margin-top: 30px;
+  padding: 20px;
+  background: #ffffffcc;
+  border-left: 5px solid #0056b3;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+audio {
+  display: block;
+  margin-top: 10px;
+  width: 100%;
+  outline: none;
+  border-radius: 8px;
+  background: #eef2f3;
+}
