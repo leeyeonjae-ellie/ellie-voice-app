@@ -1,9 +1,10 @@
-// script.js — Ellie voice interaction with animations
+// script.js — Ellie voice interaction with animations and speech input
 
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.querySelector("form");
   const input = document.querySelector("input[name='user_input']");
   const output = document.querySelector(".response") || createOutputBox();
+  const micBtn = document.getElementById("mic");
 
   function createOutputBox() {
     const box = document.createElement("div");
@@ -12,6 +13,34 @@ document.addEventListener("DOMContentLoaded", function () {
     return box;
   }
 
+  // 🎤 Speech recognition setup
+  if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+
+    micBtn.addEventListener("click", () => {
+      recognition.start();
+      micBtn.textContent = "🎙 Listening...";
+    });
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      input.value = transcript;
+      form.dispatchEvent(new Event("submit"));
+      micBtn.textContent = "🎤 Talk";
+    };
+
+    recognition.onerror = () => {
+      micBtn.textContent = "🎤 Talk";
+      alert("🎧 Could not recognize your voice. Try again.");
+    };
+  } else {
+    micBtn.disabled = true;
+    micBtn.textContent = "Mic not supported";
+  }
+
+  // 📤 Form submission
   form.onsubmit = async (e) => {
     e.preventDefault();
     const message = input.value.trim();
@@ -34,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       output.innerHTML = newResponse?.innerHTML || "<p>Something went wrong.</p>";
     } catch (error) {
-      output.innerHTML = "<p>Error: Could not connect to Ellie.</p>";
+      output.innerHTML = "<p>문제가 발생했습니다.</p>";
     } finally {
       input.disabled = false;
       input.value = "";

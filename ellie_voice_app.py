@@ -7,7 +7,7 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def ask_ellie(user_input):
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-3.5-turbo",  # ✅ 모델 변경
         messages=[
             {"role": "system", "content": (
                 "You are Ellie, a friendly and patient English tutor.\n"
