@@ -1,14 +1,12 @@
 from flask import Flask, request, render_template, send_from_directory
-import openai
 import os
-import requests
+from openai import OpenAI
 
 app = Flask(__name__)
-
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def ask_ellie(user_input):
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": (
@@ -27,11 +25,11 @@ def ask_ellie(user_input):
         temperature=0.7,
         max_tokens=100
     )
-    return response['choices'][0]['message']['content']
+    return response.choices[0].message.content
 
 def synthesize_speech(text):
     audio_path = "static/ellie_response.mp3"
-    response = openai.audio.speech.create(
+    response = client.audio.speech.create(
         model="tts-1",
         voice="shimmer",
         input=text
